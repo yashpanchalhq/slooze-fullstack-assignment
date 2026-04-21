@@ -1,0 +1,181 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+enum Country {
+  AMERICA
+  INDIA
+  UK
+  USA
+}
+
+input CreateOrderInput {
+  orderItems: [CreateOrderItemInput!]!
+  userId: String!
+}
+
+input CreateOrderItemInput {
+  menuItemId: String!
+  quantity: Float!
+}
+
+input CreatePaymentMethodInput {
+  isDefault: Boolean
+  lastFour: String!
+  provider: String!
+  type: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type LoginResponse {
+  access_token: String!
+  user: User!
+}
+
+type MenuItem {
+  createdAt: DateTime!
+  description: String
+  id: String!
+  name: String!
+  price: Float!
+  restaurant: Restaurant!
+  restaurantId: String!
+  updatedAt: DateTime!
+}
+
+type Mutation {
+  cancelOrder(id: String!): Order!
+  checkoutOrder(id: String!, paymentMethodId: String!): Order!
+  createMenuItem(description: String!, name: String!, price: Float!, restaurantId: String!): MenuItem!
+  createOrder(createOrderInput: CreateOrderInput!): Order!
+  createPaymentMethod(createPaymentMethodInput: CreatePaymentMethodInput!): PaymentMethod!
+  createRestaurant(country: Country!, description: String!, name: String!): Restaurant!
+  deletePaymentMethod(id: String!): PaymentMethod!
+  login(loginInput: LoginInput!): LoginResponse!
+  signUp(signUpInput: SignUpInput!): LoginResponse!
+  updatePaymentMethod(id: String!, updateData: UpdatePaymentMethodInput!): PaymentMethod!
+}
+
+type Order {
+  country: Country!
+  createdAt: DateTime!
+  id: String!
+  orderItems: [OrderItem!]!
+  payment: Payment
+  status: OrderStatus!
+  totalAmount: Float!
+  updatedAt: DateTime!
+  userId: String!
+}
+
+type OrderItem {
+  id: String!
+  menuItem: MenuItem!
+  menuItemId: String!
+  orderId: String!
+  price: Float!
+  quantity: Float!
+}
+
+enum OrderStatus {
+  CANCELLED
+  COMPLETED
+  CONFIRMED
+  DELIVERED
+  PENDING
+}
+
+type Payment {
+  amount: Float!
+  createdAt: DateTime!
+  id: String!
+  orderId: String!
+  paymentMethod: PaymentMethod!
+  paymentMethodId: String!
+  status: PaymentStatus!
+  updatedAt: DateTime!
+}
+
+type PaymentMethod {
+  createdAt: DateTime!
+  id: String!
+  isDefault: Boolean!
+  lastFour: String!
+  payments: [Payment!]!
+  provider: String!
+  type: String!
+  updatedAt: DateTime!
+  userId: String!
+}
+
+enum PaymentStatus {
+  COMPLETED
+  FAILED
+  PENDING
+  REFUNDED
+}
+
+type Query {
+  menuItems(restaurantId: String!): [MenuItem!]!
+  order(id: String!): Order
+  orders: [Order!]!
+  paymentMethod(id: String!): PaymentMethod
+  paymentMethods: [PaymentMethod!]!
+  payments: [Payment!]!
+  restaurant(id: String!): Restaurant
+  restaurants: [Restaurant!]!
+  user(id: String!): User
+  users: [User!]!
+  usersByCountry(country: String!): [User!]!
+}
+
+type Restaurant {
+  country: Country!
+  createdAt: DateTime!
+  description: String
+  id: String!
+  menuItems: [MenuItem!]!
+  name: String!
+  updatedAt: DateTime!
+}
+
+enum Role {
+  ADMIN
+  MANAGER
+  MEMBER
+  TEACHER
+}
+
+input SignUpInput {
+  country: Country!
+  email: String!
+  name: String!
+  password: String!
+  role: Role!
+}
+
+input UpdatePaymentMethodInput {
+  isDefault: Boolean
+  lastFour: String
+  provider: String
+  type: String
+}
+
+type User {
+  country: Country!
+  createdAt: DateTime!
+  email: String!
+  id: String!
+  name: String!
+  role: Role!
+  updatedAt: DateTime!
+}
