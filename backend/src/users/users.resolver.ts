@@ -7,7 +7,7 @@ import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { CountryGuard } from '../auth/country.guard';
 import { Countries } from '../common/decorators/countries.decorator';
-import { Role } from '../common/enums';
+import { Role, Country } from '../common/enums';
 
 
 @Resolver(() => User)
@@ -31,6 +31,6 @@ export class UsersResolver {
   @UseGuards(JwtAuthGuard, RolesGuard, CountryGuard)
   @Roles(Role.ADMIN, Role.MANAGER)
   async usersByCountry(@Args('country') country: string) {
-    return this.usersService.findByCountry(country);
+    return this.usersService.findByCountry(country as Country);
   }
 }
