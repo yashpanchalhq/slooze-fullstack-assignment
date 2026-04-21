@@ -23,14 +23,18 @@ const Alert = React.forwardRef<
   React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
 >(({ className, variant, children, ...props }, ref) => {
   // Check if we have an icon as the first child
-  const hasIcon = React.Children.toArray(children).some(
-    (child) => React.isValidElement(child) && (
-      (child.type as any).displayName === 'Icon' || 
-      (child.type as any).name?.includes('Icon') || 
-      (child.type as any).displayName?.includes('Icon') || 
-      ['svg', 'AlertCircle', 'CheckCircle2', 'Info'].some(n => (child.type as any).name === n)
-    )
-  );
+  const hasIcon = React.Children.toArray(children).some((child) => {
+    if (React.isValidElement(child)) {
+      const type = child.type as any;
+      return (
+        type?.displayName === 'Icon' || 
+        type?.name?.includes('Icon') || 
+        type?.displayName?.includes('Icon') || 
+        ['svg', 'AlertCircle', 'CheckCircle2', 'Info'].some(n => type?.name === n)
+      );
+    }
+    return false;
+  });
 
   return (
     <div
