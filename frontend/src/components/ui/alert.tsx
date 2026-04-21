@@ -24,7 +24,12 @@ const Alert = React.forwardRef<
 >(({ className, variant, children, ...props }, ref) => {
   // Check if we have an icon as the first child
   const hasIcon = React.Children.toArray(children).some(
-    (child) => React.isValidElement(child) && (child.type as any).displayName === 'Icon' || (child.type as any).name?.includes('Icon') || (child.type as any).displayName?.includes('Icon') || ['svg', 'AlertCircle', 'CheckCircle2', 'Info'].some(n => (child.type as any).name === n)
+    (child) => React.isValidElement(child) && (
+      (child.type as any).displayName === 'Icon' || 
+      (child.type as any).name?.includes('Icon') || 
+      (child.type as any).displayName?.includes('Icon') || 
+      ['svg', 'AlertCircle', 'CheckCircle2', 'Info'].some(n => (child.type as any).name === n)
+    )
   );
 
   return (
