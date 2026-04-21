@@ -37,7 +37,7 @@ const DS = `
 export const RestaurantList: React.FC = () => {
   const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(null);
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
-  const { data, loading, error } = useQuery(GET_RESTAURANTS);
+  const { data, loading, error } = useQuery<{ restaurants: Restaurant[] }>(GET_RESTAURANTS);
 
   if (loading) return <p style={{ color: '#2a2a2a', fontSize: '0.8rem', padding: '2rem 0' }}>Loading…</p>;
   if (error)   return <p style={{ color: '#555', fontSize: '0.8rem', padding: '2rem 0' }}>Error: {error.message}</p>;
