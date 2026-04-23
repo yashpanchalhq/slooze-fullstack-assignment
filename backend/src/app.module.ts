@@ -17,6 +17,7 @@ import { PaymentsModule } from './payments/payments.module';
       sortSchema: true,
       playground: true,
       context: ({ req }) => ({ req }),
+      csrfPrevention: false,
     }),
     PrismaModule,
     AuthModule,
