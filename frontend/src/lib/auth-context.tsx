@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { ApolloClient, gql } from '@apollo/client';
 import { AuthContext, User, LoginData, SignUpData } from '@/types';
-import { client } from './apollo-client';
+import { apolloClient as client } from './apollo-client';
 
 const AuthContextInstance = createContext<AuthContext | undefined>(undefined);
 

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
-import { ApolloWrapper } from "@/lib/apollo-wrapper";
-import { AuthProvider } from "@/lib/auth-context";
+import { Providers } from "./providers";
 import "./globals.css";
 
 const inter = Inter({
@@ -31,9 +30,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
-        <ApolloWrapper>
-          <AuthProvider>{children}</AuthProvider>
-        </ApolloWrapper>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

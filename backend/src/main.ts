@@ -8,10 +8,17 @@ async function bootstrap() {
 
   // Enable CORS for frontend
   app.enableCors({
-    origin: [
-      'http://localhost:3000',
-      'https://slooze-fullstack-assignment-n9br-dx9g7k9tr.vercel.app',
-    ],
+    origin: (origin, callback) => {
+      const allowed = [
+        'http://localhost:3000',
+        /\.vercel\.app$/,
+      ];
+      if (!origin || allowed.some(o => typeof o === 'string' ? o === origin : o.test(origin))) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
   });
 
